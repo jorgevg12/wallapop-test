@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { robotoMono, robotoSans } from "@/app/ui/fonts";
+import { MSWProvider } from "./providers/msw-provider";
+
+if (process.env.NEXT_RUNTIME === 'nodejs') {
+  const { server } = require('../mocks/node');
+  server.listen({ onUnhandledRequest: "bypass" });
+}
 
 
 export const metadata: Metadata = {
@@ -18,7 +24,7 @@ export default function RootLayout({
       <body
         className={`${robotoSans.variable} ${robotoMono.variable} antialiased`}
       >
-        {children}
+        <MSWProvider>{children}</MSWProvider>
       </body>
     </html>
   );
