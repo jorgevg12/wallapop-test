@@ -1,37 +1,15 @@
 'use client';
 
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Search from './ui/search';
-import { Item, ResponseData } from './types/types';
+import CardItem from './ui/card-item';
+import MessageIconScreen from './ui/message-icon-screen';
+import { useFetchData } from './hooks/useFetchData';
+import { MessageIconScreenValues } from './constants/constants';
+import { MessageType } from './enums/enums';
 
 export default function Home() {
-  const [items, setItems] = useState<Item[]>([]);
-  const [search, setSearch] = useState<string>('');
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [availablePages, setAvailablePages] = useState(1);
-
-  const fetchData = async (page: number, search: string) => {
-    setLoading(true);
-    const searchParam = search ? `&search=${search}` : '';
-    const response = await fetch(`/api/items/?page=${page}${searchParam}`);
-    const data = await response.json() as ResponseData;
-    setItems(prevItems => (page === 1 ? data.items : [...prevItems, ...data.items]));
-    setAvailablePages(data.pagesAvailable);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    setPage(1);
-    fetchData(1, search);
-  }, [search]);
-
-  useEffect(() => {
-    if (page > 1) {
-      fetchData(page, search);
-    }
-  }, [page]);
+  const { items, page, setPage, setSearch, loading, error, availablePages } = useFetchData('');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,18 +27,23 @@ export default function Home() {
   }, [loading]);
 
   return (
-    <div>
-      <Search placeholder="Search items..." onSearch={setSearch} />
-      {items.map((item, index) => (
-        <div key={index}>
-          <h2>{item.title}</h2>
-          <p>{item.description}</p>
-          <p>{item.price}</p>
-          <Image src={`/img/${item.image}`} width={110} height={110} alt={item.title} className='rounded-lg max-w-full h-auto' />
-        </div>
-      ))}
-      {loading && <p>Loading...</p>}
-      {page < availablePages && !loading && <p>Load more</p>}
-    </div>
+    <>
+      <header className='sticky bg-[#2c2c2c] flex justify-center top-0 p-4 shadow-md z-10'>
+        <Search placeholder="Search items..." onSearch={setSearch} />
+      </header>
+      {items.length > 0 &&
+        <main className='p-4'>
+          {items.map((item, index) => (
+            <CardItem key={index} item={item} />
+          ))}
+        </main>
+      }
+      {loading && <MessageIconScreen message={MessageIconScreenValues[MessageType.Loading].message} img={MessageIconScreenValues[MessageType.Loading].img} />}
+      {(error || (!items.length && !loading)) &&
+        <MessageIconScreen
+          message={error ? MessageIconScreenValues[MessageType.Error].message : MessageIconScreenValues[MessageType.NoResults].message}
+          img={error ? MessageIconScreenValues[MessageType.Error].img : MessageIconScreenValues[MessageType.NoResults].img}
+        />}
+    </>
   );
 }

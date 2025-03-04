@@ -14,3 +14,8 @@ export interface ResponseData{
   items: Item[];
   pagesAvailable: number;
 }
+
+export interface MessageScreen {
+  message?: string;
+  img: string;
+}

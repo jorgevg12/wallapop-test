@@ -1,17 +1,28 @@
-import { http, HttpResponse } from 'msw';
+import { delay, http, HttpResponse } from 'msw';
 import data from './data/data.json';
 import { Data, Item } from '../app/types/types';
 
 const ITEMS_PER_PAGE = 5;
 
 export const handlers = [
-  http.get('/api/items', (req) => {
+  http.get('/api/items', async (req) => {
+
+    //To emulate an error response uncomment the following block:
+
+    // return new HttpResponse('Not found', {
+    //   status: 404,
+    //   headers: {
+    //     'Content-Type': 'text/plain',
+    //   },
+    // })
+    
     const queryParams = getQueryParams(req.request.url);
     const search = queryParams['search'];
     const page = parseInt(queryParams['page'] || '1', 10);
     const normalizedSearchWords = normalizeText(search || '').split(' ');
     const filteredData = filterData(data, normalizedSearchWords);
     const paginatedData = paginateData(filteredData, page, ITEMS_PER_PAGE);
+    await delay(3000);
     return HttpResponse.json({ items: paginatedData, pagesAvailable: Math.ceil(filteredData.length / ITEMS_PER_PAGE) });
   }),
 ];

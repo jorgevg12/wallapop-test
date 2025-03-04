@@ -1,8 +1,13 @@
 @import "tailwindcss";
+@tailwind utilities;
 
 @theme {
   --font-sans: var(--font-roboto-sans);
   --font-mono: var(--font-geist-mono);
+  --color-background: #171717;
+  --color-background-2: #2c2c2c;
+  --color-background-3: #3a3a3a;
+  --color-foreground: #fff;
 }
 
 :root {
