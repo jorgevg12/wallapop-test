@@ -30,6 +30,7 @@ export default function Header({ setSearch }: HeaderProps) {
         aria-label="Favorites button"
         aria-haspopup="dialog"
         aria-expanded={isModalOpen}
+        data-testid="favorites-button"
       >
         Favorites
         <Image

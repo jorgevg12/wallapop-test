@@ -7,7 +7,6 @@ interface FavoritesModalItemProps {
 }
 
 export default function FavoritesModalItem({item, removeFavorite}: FavoritesModalItemProps) {
-  console.log('FavoritesModalItem render');
   return(
     <div className="flex flex-col md:flex-row gap-5 bg-background-3 items-center p-4 rounded-lg w-full mb-4">
       <div className="relative h-24 w-24">
@@ -20,6 +19,7 @@ export default function FavoritesModalItem({item, removeFavorite}: FavoritesModa
         onClick={() => removeFavorite(item)}
         type="button"
         className="bg-red-500 text-white px-4 py-2 rounded cursor-pointer"
+        data-testid="remove-favorite"
       >
         Remove
       </button>

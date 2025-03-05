@@ -16,7 +16,7 @@ export default function FavoritesModal({closeModal}: FavoritesModalProps) {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-20">
-      <div className="bg-background-2 p-6 rounded-md w-11/12 md:w-4/6 max-w-[900px] h-11/12 md:h-4/6">
+      <div className="bg-background-2 p-6 rounded-md w-11/12 md:w-4/6 max-w-[900px] h-11/12 md:h-4/6" data-testid="favorites-modal">
         <header className="flex justify-between items-center mb-4 h-14">
           <div className="flex items-center gap-2">
             <h2 className="text-xl font-bold">Favorites</h2>
@@ -32,6 +32,7 @@ export default function FavoritesModal({closeModal}: FavoritesModalProps) {
             onClick={closeModal}
             type="button"
             className="bg-white text-background-2 px-4 py-2 rounded cursor-pointer"
+            data-testid="modal-close"
           >
             Close
           </button>

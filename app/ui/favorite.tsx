@@ -11,6 +11,7 @@ function Favorite({ isFavorite, handleFavoriteClick }: FavoriteProps) {
     <button
       className={`flex items-center justify-center rounded-full w-9 h-9 justify-self-end cursor-pointer select-none ${isFavorite ? 'bg-gray-50' : 'bg-gray-200'}`}
       onClick={handleFavoriteClick}
+      data-testid="favorites-toggle"
     >
       <Image
         src={isFavorite ? "/icons/heart-filled.svg" : "/icons/heart-outline.svg"}
