@@ -1,11 +1,12 @@
 import Image from "next/image";
+import { memo } from "react";
 
 interface FavoriteProps {
   isFavorite: boolean;
   handleFavoriteClick: () => void;
 }
 
-export default function Favorite({ isFavorite, handleFavoriteClick }: FavoriteProps) {
+function Favorite({ isFavorite, handleFavoriteClick }: FavoriteProps) {
   return(
     <button
       className={`flex items-center justify-center rounded-full w-9 h-9 justify-self-end cursor-pointer select-none ${isFavorite ? 'bg-gray-50' : 'bg-gray-200'}`}
@@ -21,3 +22,5 @@ export default function Favorite({ isFavorite, handleFavoriteClick }: FavoritePr
     </button>
   )
 }
+
+export default Favorite;

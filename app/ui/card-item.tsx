@@ -1,30 +1,21 @@
 'use client';
 
+import React, { memo } from 'react';
 import Image from "next/image";
 import { Item } from "../types/types";
 import PriceTag from "./price-tag";
-import { useFavorites } from "../providers/favorites";
 import Favorite from "./favorite";
 
 interface CardItemProps {
   item: Item;
-  index: number;
+  isFavorite: boolean;
+  onFavoriteClick: (item: Item) => void;
 }
 
-export default function CardItem({ item, index }: CardItemProps) {
-  const { favorites, addFavorite, removeFavorite } = useFavorites();
-  const isFavorite = favorites.some(fav => fav.title === item.title);
-
-  const handleFavoriteClick = () => {
-    if (isFavorite) {
-      removeFavorite(item);
-    } else {
-      addFavorite(item);
-    }
-  };
+function CardItem({ item, isFavorite, onFavoriteClick }: CardItemProps) {
 
   return (
-    <div className="flex flex-col-reverse  md:flex-row gap-3 bg-background-2 items-center md:items-start space-x-2 p-4 rounded-lg w-full md:h-44 mb-4">
+    <div className="flex flex-col-reverse md:flex-row gap-3 bg-background-2 items-center md:items-start space-x-2 p-4 rounded-lg w-full md:h-44 mb-4">
       <div className="relative h-36 md:h-full min-w-36">
         <Image
           src={`/img/${item.image}`}
@@ -38,7 +29,11 @@ export default function CardItem({ item, index }: CardItemProps) {
           <h3 className="text-xl">{item.title}</h3>
           <PriceTag price={item.price} />
           <div className="ml-auto">
-            <Favorite isFavorite={isFavorite} handleFavoriteClick={handleFavoriteClick}/>
+            <Favorite 
+              isFavorite={isFavorite} 
+              handleFavoriteClick={() => onFavoriteClick(item)}
+              aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+           />
           </div>
         </div>
         <p className="text-sm">{item.description}</p>
@@ -46,3 +41,10 @@ export default function CardItem({ item, index }: CardItemProps) {
     </div>
   );
 }
+
+//logic added to prevent re-renders when the item is the same.
+function areEqual(prevProps: CardItemProps, nextProps: CardItemProps) {
+  return prevProps.item === nextProps.item && prevProps.isFavorite === nextProps.isFavorite;
+}
+
+export default memo(CardItem, areEqual);

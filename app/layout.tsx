@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import { robotoMono, robotoSans } from "@/app/ui/fonts";
+import "./styles/globals.css";
+import { robotoMono, robotoSans } from "@/app/styles/fonts";
 import { MSWProvider } from "./providers/msw-provider";
 import { FavoritesProvider } from "./providers/favorites";
 

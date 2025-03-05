@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-//Hook make for disable scroll in body when modal is open and when is loading.
+//Hook make for disable scroll in body when modal is open or when is loading data.
 export default function useNoScroll(isActive: boolean) {
   useEffect(() => {
     if (isActive) {

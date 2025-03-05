@@ -8,7 +8,11 @@ interface MessageIconScreenProps extends MessageScreen { }
 export default function MessageIconScreen({ message, img }: MessageIconScreenProps) {
 
   return (
-    <div className="flex flex-col gap-3 justify-center items-center h-[calc(100vh-74px)] bg-background-2/80 fixed top-[74px] left-0 right-0">
+    <div 
+      className="flex flex-col gap-3 justify-center items-center h-[calc(100vh-74px)] bg-background-2/80 fixed top-[74px] left-0 right-0"
+      role="alert"
+      aria-live="assertive"
+    >
       {message && <h3>{message}</h3>}
       <Image
         src={`/icons/${img}.svg`}
@@ -16,6 +20,7 @@ export default function MessageIconScreen({ message, img }: MessageIconScreenPro
         width={100}
         height={100}
         className={img === "loading" ? "animate-spin w-12 h-auto" : ""}
+        aria-hidden="true"
       />
     </div>
   );
