@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { robotoMono, robotoSans } from "@/app/ui/fonts";
 import { MSWProvider } from "./providers/msw-provider";
+import { FavoritesProvider } from "./providers/favorites";
 
 if (process.env.NEXT_RUNTIME === 'nodejs') {
   const { server } = require('../mocks/node');
@@ -24,7 +25,9 @@ export default function RootLayout({
       <body
         className={`${robotoSans.variable} ${robotoMono.variable} antialiased`}
       >
+      <FavoritesProvider>
         <MSWProvider>{children}</MSWProvider>
+      </FavoritesProvider>
       </body>
     </html>
   );

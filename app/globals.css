@@ -6,7 +6,7 @@
   --font-mono: var(--font-geist-mono);
   --color-background: #171717;
   --color-background-2: #2c2c2c;
-  --color-background-3: #3a3a3a;
+  --color-background-3: #252525;
   --color-foreground: #fff;
 }
 
@@ -19,4 +19,8 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-roboto-sans), Arial, Helvetica, sans-serif;
+}
+
+.no-scroll {
+  overflow: hidden;
 }
