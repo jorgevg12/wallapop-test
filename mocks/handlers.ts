@@ -21,6 +21,7 @@ export const handlers = [
     const normalizedSearchWords = normalizeText(search || "").split(" ");
     const filteredData = filterData(data, normalizedSearchWords);
     const paginatedData = paginateData(filteredData, page, ITEMS_PER_PAGE);
+    // Emulate a network delay
     await delay(3000);
     return HttpResponse.json({
       items: paginatedData,
